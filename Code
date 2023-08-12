@@ -1,0 +1,220 @@
+<html>
+
+<head>
+
+    
+    <title>Image Upload</title>
+    </style>
+        
+    <style>
+        body {
+            background-color: transparent;
+        }
+        /* Define a CSS class for positioning the image */
+        .image-container {
+            position: absolute;
+            max-width: 182px;
+            max-height: 100px;
+            background-color: lightgreen;
+        }
+        #imageContainer {
+            top: 2000px;
+            left: 20px;
+        }
+        .image-container2 {
+            position: absolute;
+            max-width: 182px;
+            max-height: -100px;
+            background-color: lightgreen;
+        }
+        #imageContainer2 {
+            top: 2000px;
+            left: 222px;
+        }
+        .image-container3 {
+            position: absolute;
+            max-width: 182px;
+            max-height: 100px;
+            background-color: lightgreen;
+        }
+        #imageContainer3 {
+            top: 2000px;
+            left: 424px;
+        }
+        #signInSection {
+        position: absolute;
+        top: 20px;
+        Left: 550px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="signUpSection">
+        <h1>Sign Up</h1>
+        <input type="text" id="newUsernameInput" placeholder="New Username">
+        <input type="password" id="newPasswordInput" placeholder="New Password">
+        <button onclick="signUp()">Sign Up</button>
+    </div>
+    <div id="signInSection">
+        <h1>Sign In</h1>
+        <input type="text" id="usernameInput" placeholder="Username">
+        <input type="password" id="passwordInput" placeholder="Password">
+        <button onclick="signIn()">Sign In</button>
+        <p id="signInStatus"></p>
+    </div>
+    <div id="uploadSection1">
+        <h1>Upload an Image and Set URL</h1>
+        <input type="text" id="urlInput" placeholder="Enter URL for Image">
+        <input type="file" id="fileInput">
+        <button onclick="uploadImage()">Upload</button>
+    <!-- Use the CSS class to style the image container -->
+        <div class="image-container" id="imageContainer">
+            <a id="imageLink" href="#" target="_blank">
+                 <img id="uploadedImage" style="max-width: 100%">
+            </a>
+        </div>
+    </div>
+    <script>
+        // Functionality for sign-up
+        function signUp() {
+            const newUsernameInput = document.getElementById('newUsernameInput').value;
+            const newPasswordInput = document.getElementById('newPasswordInput').value;
+
+            if (!newUsernameInput || !newPasswordInput) {
+                alert('Please enter a new username and password.');
+                return;
+            }
+
+            // Save the new username and hashed password in localStorage
+            const hashedPassword = btoa(newPasswordInput); // Base64 encoding for demo
+            localStorage.setItem(newUsernameInput, hashedPassword);
+
+            // Show the sign-in section
+            const signInSection = document.getElementById('signInSection');
+            const signUpSection = document.getElementById('signUpSection');
+            signInSection.style.display = 'block';
+            signUpSection.style.display = 'none';
+        }
+
+        // Functionality for sign-in
+        function signIn() {
+            const usernameInput = document.getElementById('usernameInput').value;
+            const passwordInput = document.getElementById('passwordInput').value;
+            const signInStatus = document.getElementById('signInStatus');
+
+            const storedPassword = localStorage.getItem(usernameInput);
+            if (storedPassword && storedPassword === btoa(passwordInput)) {
+                // Show the upload section if sign-in is successful
+                const uploadSection = document.getElementById('uploadSection');
+                const signInSection = document.getElementById('signInSection');
+                uploadSection.style.display = 'block';
+                signInSection.style.display = 'none';
+                signInStatus.innerHTML = 'Signed in as ' + usernameInput;
+            } else {
+                signInStatus.innerHTML = 'Invalid username or password';
+            }
+        }
+        function uploadImage() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadedImage = document.getElementById('uploadedImage');
+            const imageLink = document.getElementById('imageLink');
+            const urlInput = document.getElementById('urlInput');
+
+            const file = fileInput.files[0];
+            if (file && isValidUrl(urlInput.value)) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    uploadedImage.src = e.target.result;
+                    imageLink.href = urlInput.value;
+                    imageContainer.style.display = 'block';
+                }
+
+                reader.readAsDataURL(file);
+            }
+        }
+        function isValidUrl(url) {
+            return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(url);
+        }
+
+        function isValidUser(username, password) {
+            // Replace with your actual authentication logic
+            return username === 'demo' && password === 'password';
+        }
+
+    </script>
+        <div id="uploadSection2">
+         <h1>Upload an Image and Set URL 2</h1>
+            <input type="text" id="urlInput2" placeholder="Enter URL for Image">
+            <input type="file" id="fileInput2">
+            <button onclick="uploadImage2()">Upload</button>
+    <!-- Use the CSS class to style the image container -->
+            <div class="image-container2" id="imageContainer2">
+                <a id="imageLink2" href="#" target="_blank">
+                     <img id="uploadedImage2" style="max-width: 100%">
+            </a>
+        </div>
+    </div>
+    </body>
+    <script>
+        function uploadImage2() {
+            const fileInput2 = document.getElementById('fileInput2');
+            const uploadedImage2 = document.getElementById('uploadedImage2');
+            const imageLink2 = document.getElementById('imageLink2');
+            const urlInput2 = document.getElementById('urlInput2');
+
+            const file = fileInput2.files[0];
+            if (file && isValidUrl(urlInput2.value)) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    uploadedImage2.src = e.target.result;
+                    imageLink2.href = urlInput2.value;
+                    imageContainer2.style.display = 'block';
+                }
+
+                reader.readAsDataURL(file);
+            }
+        }
+        function isValidUrl(url) {
+            return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(url);
+        }
+    </script>
+    <div id="uploadSection3">
+        <h1>Upload an Image and Set URL 3</h1>
+            <input type="text" id="urlInput3" placeholder="Enter URL for Image">
+            <input type="file" id="fileInput3">
+            <button onclick="uploadImage3()">Upload</button> 
+    <!-- Use the CSS class to style the image container -->
+            <div class="image-container3" id="imageContainer3">
+                <a id="imageLink3" href="#" target="_blank">
+                <img id="uploadedImage3" style="max-width: 100%">
+            </a>
+        </div>
+    </div>
+    <script>
+        function uploadImage3() {
+            const fileInput3 = document.getElementById('fileInput3');
+            const uploadedImage3 = document.getElementById('uploadedImage3');
+            const imageLink3 = document.getElementById('imageLink3');
+            const urlInput3 = document.getElementById('urlInput3');
+
+            const file = fileInput3.files[0];
+            if (file && isValidUrl(urlInput3.value)) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    uploadedImage3.src = e.target.result;
+                    imageLink3.href = urlInput3.value;
+                    imageContainer3.style.display = 'block';
+                }
+
+                reader.readAsDataURL(file);
+            }
+        }
+        function isValidUrl(url) {
+            return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(url);
+        }
+    </script>
+</html>
